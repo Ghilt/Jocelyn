@@ -6,22 +6,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
+    android:background="@android:color/transparent"
     sothree:umanoScrollableView="@id/chat_fragment"
     sothree:umanoPanelHeight="68dp"
-    sothree:umanoShadowHeight="4dp">
+    sothree:umanoFadeColor="@android:color/transparent"
+    sothree:umanoOverlay="true"
+    sothree:umanoShadowHeight="0dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:background="#FF3FFF"
+        android:background="#9F4F6F"
         android:text="Main Content"
         android:textSize="16sp" />
 
-    <fragment android:name="se.agency.adccor.jocelyn.views.ChatFragment"
+    <fragment
+        android:name="se.agency.adccor.jocelyn.views.ChatFragment"
         android:id="@+id/chat_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         android:layout_marginTop="100dp"
         android:gravity="center|top" />
 

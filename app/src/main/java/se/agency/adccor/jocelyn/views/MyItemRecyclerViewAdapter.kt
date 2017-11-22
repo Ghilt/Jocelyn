@@ -21,7 +21,7 @@ class MyItemRecyclerViewAdapter(private val mValues: List<DummyItem>, private va
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_chat, parent, false)
+                .inflate(R.layout.chat_bubble_item, parent, false)
         return ViewHolder(view)
     }
 
