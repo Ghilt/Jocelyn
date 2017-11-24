@@ -20,8 +20,7 @@ class MyItemRecyclerViewAdapter(private val mValues: List<DummyItem>, private va
     override fun getItemCount() = mValues.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.chat_bubble_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_bubble_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -40,7 +39,7 @@ class MyItemRecyclerViewAdapter(private val mValues: List<DummyItem>, private va
         val mIdView: TextView = mView.findViewById(R.id.id)
         val mContentView: TextView = mView.findViewById(R.id.content)
 
-        var mItem: DummyItem = DummyItem("null id","null content", "null detail")
+        var mItem: DummyItem = DummyItem("null id", "null content", "null detail")
 
         override fun toString(): String {
             return super.toString() + " '" + mContentView.text + "'"

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--https://github.com/umano/AndroidSlidingUpPanel-->
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,7 +9,7 @@
     android:gravity="bottom"
     android:background="@android:color/transparent"
     sothree:umanoScrollableView="@id/chat_fragment"
-    sothree:umanoPanelHeight="68dp"
+    sothree:umanoPanelHeight="@dimen/chat_fragment_collapsed_height"
     sothree:umanoFadeColor="@android:color/transparent"
     sothree:umanoOverlay="true"
     sothree:umanoShadowHeight="0dp">
@@ -17,17 +18,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:id="@+id/MainPlaceHolder"
         android:background="#9F4F6F"
         android:text="Main Content"
         android:textSize="16sp" />
 
     <fragment
-        android:name="se.agency.adccor.jocelyn.views.ChatFragment"
+        class="se.agency.adccor.jocelyn.views.ChatFragment"
         android:id="@+id/chat_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/chat_fragment_expanded_top_margin"
         android:background="@android:color/transparent"
-        android:layout_marginTop="100dp"
         android:gravity="center|top" />
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

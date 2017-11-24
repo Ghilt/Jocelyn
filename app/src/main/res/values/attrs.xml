@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="TwinStateAnimationView">
+        <attr name="startState" format="integer" />
+        <attr name="endState" format="integer" />
+    </declare-styleable>
+
+
+</resources>

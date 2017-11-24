@@ -1,8 +1,8 @@
 package se.agency.adccor.jocelyn.views
 
+import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
-import android.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,22 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import kotlinx.android.synthetic.main.fragment_chat.*
+import kotlinx.android.synthetic.main.fragment_chat.view.*
 import se.agency.adccor.jocelyn.R
 import se.agency.adccor.jocelyn.views.dummy.DummyContent
 import se.agency.adccor.jocelyn.views.dummy.DummyContent.DummyItem
 
-/**
- * A fragment representing a list of Items.
- *
- *
- * Activities containing this fragment MUST implement the [OnListFragmentInteractionListener]
- * interface.
- */
-/**
- * Mandatory empty constructor for the fragment manager to instantiate the
- * fragment (e.g. upon screen orientation changes).
- */
 class ChatFragment : Fragment() {
     // TODO: Customize parameters
     private var mColumnCount = 1
@@ -43,16 +33,17 @@ class ChatFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_chat, container, false)
 
+        val recyclerView = view.list
         // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
+        if (recyclerView is RecyclerView) {
+            val context = recyclerView.context
             if (mColumnCount <= 1) {
-                view.setLayoutManager(LinearLayoutManager(context))
+                recyclerView.layoutManager = LinearLayoutManager(context)
             } else {
-                view.setLayoutManager(GridLayoutManager(context, mColumnCount))
+                recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            view.setAdapter(MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener))
-            Log.d("spx", "test On panel slide" + view.adapter.itemCount)
+            recyclerView.adapter = MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener)
+            Log.d("spx", "test On panel slide" + recyclerView.adapter.itemCount)
         }
 
         return view
@@ -73,15 +64,14 @@ class ChatFragment : Fragment() {
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
+    fun onFragmentExpanded() {
+        handlebarBorder.toStartState()
+    }
+
+    fun onFragmentCollapsed() {
+        handlebarBorder.toEndState()
+    }
+
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onListFragmentInteraction(item: DummyItem)
@@ -101,4 +91,6 @@ class ChatFragment : Fragment() {
             return fragment
         }
     }
+
+
 }
