@@ -42,7 +42,7 @@ class ChatFragment : Fragment() {
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            recyclerView.adapter = MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener)
+            recyclerView.adapter = ChatHistoryRecyclerViewAdapter(getContext(), DummyContent.ITEMS, mListener)
             Log.d("spx", "test On panel slide" + recyclerView.adapter.itemCount)
         }
 

@@ -1,35 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--https://github.com/umano/AndroidSlidingUpPanel-->
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
-    xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sliding_layout"
+<?xml version="1.0" encoding="utf-8"?><!--https://github.com/umano/AndroidSlidingUpPanel-->
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom"
-    android:background="@android:color/transparent"
-    sothree:umanoScrollableView="@id/chat_fragment"
-    sothree:umanoPanelHeight="@dimen/chat_fragment_collapsed_height"
-    sothree:umanoFadeColor="@android:color/transparent"
-    sothree:umanoOverlay="true"
-    sothree:umanoShadowHeight="0dp">
+    android:background="@android:color/holo_blue_dark">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:id="@+id/MainPlaceHolder"
-        android:background="#9F4F6F"
-        android:text="Main Content"
-        android:textSize="16sp" />
-
-    <fragment
-        class="se.agency.adccor.jocelyn.views.ChatFragment"
-        android:id="@+id/chat_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/chat_fragment_expanded_top_margin"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:sothree="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/sliding_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@android:color/transparent"
-        android:gravity="center|top" />
+        android:gravity="bottom"
+        sothree:layout_constraintBottom_toTopOf="@id/textChatInput"
+        sothree:layout_constraintEnd_toEndOf="parent"
+        sothree:layout_constraintStart_toStartOf="parent"
+        sothree:layout_constraintTop_toTopOf="parent"
+        sothree:umanoFadeColor="@android:color/transparent"
+        sothree:umanoOverlay="true"
+        sothree:umanoPanelHeight="@dimen/chat_fragment_collapsed_height"
+        sothree:umanoScrollableView="@id/chat_fragment"
+        sothree:umanoShadowHeight="0dp">
 
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+        <TextView
+            android:id="@+id/MainPlaceHolder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/test2"
+            android:gravity="center"
+            android:text="Main Content"
+            android:textSize="16sp" />
+
+        <fragment
+            android:id="@+id/chat_fragment"
+            class="se.agency.adccor.jocelyn.views.ChatFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/chat_fragment_expanded_top_margin"
+            android:background="@android:color/transparent"
+            android:gravity="center|top" />
+
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+    <include
+        android:id="@+id/textChatInput"
+        layout="@layout/chat_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/chat_fragment_chat_input_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
