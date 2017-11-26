@@ -10,20 +10,24 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/chat_fragment_small_padding"
-        android:layout_marginStart="@dimen/chat_fragment_small_padding"
         android:layout_marginTop="@dimen/chat_fragment_small_padding"
+        android:layout_marginStart="@dimen/chat_fragment_small_padding"
         android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/buttonSend"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonSend"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="send"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textChatInput"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="0dp"
+        android:backgroundTint="@color/test"
+        android:backgroundTintMode="multiply"
+        android:background="@drawable/paper_airplane_anim"
+        android:layout_marginEnd="@dimen/chat_fragment_small_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textChatInput"
+        app:layout_constraintBottom_toBottomOf="@id/textChatInput" />
 
 </android.support.constraint.ConstraintLayout>

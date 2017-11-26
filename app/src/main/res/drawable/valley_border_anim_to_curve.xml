@@ -11,10 +11,10 @@
             <group android:name="layer1">
                 <path
                     android:name="path10"
-                    android:pathData="@dimen/vector_drawable_valley_border_path"
+                    android:pathData="@dimen/valley_vector_drawable_valley_path"
                     android:fillColor="@color/lightGray"
                     android:strokeColor="@color/shadow_gradient"
-                    android:strokeWidth="@dimen/stroke_width"/>
+                    android:strokeWidth="@dimen/valley_stroke_width"/>
             </group>
         </vector>
     </aapt:attr>
@@ -22,9 +22,9 @@
         <aapt:attr name="android:animation">
             <objectAnimator
                 android:propertyName="pathData"
-                android:duration="@dimen/transform_animation_duration"
-                android:valueFrom="@dimen/vector_drawable_valley_border_path"
-                android:valueTo="@dimen/vector_drawable_valley_straight_border_path"
+                android:duration="@dimen/valley_animation_duration"
+                android:valueFrom="@dimen/valley_vector_drawable_valley_path"
+                android:valueTo="@dimen/valley_vector_drawable_straight_path"
                 android:valueType="pathType"
                 android:interpolator="@android:anim/anticipate_overshoot_interpolator"/>
         </aapt:attr>

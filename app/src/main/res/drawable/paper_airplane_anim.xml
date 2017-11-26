@@ -1,0 +1,164 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="78dp"
+            android:height="60dp"
+            android:viewportWidth="98"
+            android:viewportHeight="60">
+            <group android:name="layer1">
+                <path
+                    android:name="path821"
+                    android:pathData="M 46 55 L 80 5"
+                    android:strokeColor="#000000"
+                    android:strokeWidth="@dimen/paper_airplane_stroke_width"/>
+                <path
+                    android:name="path815"
+                    android:pathData="M 80 5 L 25 39 L 42 43 L 45 55 L 49 45 L 70 50 Z"
+                    android:fillColor="#ffffff"
+                    android:strokeColor="#000000"
+                    android:strokeWidth="@dimen/paper_airplane_stroke_width"/>
+                <path
+                    android:name="path817"
+                    android:pathData="M 49 45 L 80 5 L 42 43"
+                    android:strokeColor="#000000"
+                    android:strokeWidth="@dimen/paper_airplane_stroke_width"/>
+            </group>
+        </vector>
+    </aapt:attr>
+    <target android:name="layer1">
+        <aapt:attr name="android:animation">
+            <set>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="@dimen/paper_airplane_transform_duration_1"
+                    android:valueFrom="1"
+                    android:valueTo="0.5"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="@dimen/paper_airplane_transform_duration_1"
+                    android:valueFrom="1"
+                    android:valueTo="0.5"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="translateY"
+                    android:duration="@dimen/paper_airplane_transform_duration_1"
+                    android:valueTo="28"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="rotation"
+                    android:duration="@dimen/paper_airplane_transform_duration_1"
+                    android:valueTo="9"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <!--Second stage-->
+                <objectAnimator
+                    android:propertyName="translateY"
+                    android:startOffset="@dimen/paper_airplane_transform_offset"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueFrom="28"
+                    android:valueTo="5"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="translateX"
+                    android:startOffset="@dimen/paper_airplane_transform_offset"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueTo="60"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="rotation"
+                    android:startOffset="@dimen/paper_airplane_transform_offset"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueFrom="9"
+                    android:valueTo="-10"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="pivotX"
+                    android:startOffset="200"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueTo="-20"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:startOffset="@dimen/paper_airplane_transform_offset"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueFrom="0.5"
+                    android:valueTo="0.2"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:startOffset="@dimen/paper_airplane_transform_offset"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueFrom="0.5"
+                    android:valueTo="0.2"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <!--Reset to origin-->
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:valueTo="1"
+                    android:valueFrom="1"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:startOffset="@dimen/paper_airplane_reset_anim_offset"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:valueTo="1"
+                    android:valueFrom="1"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:startOffset="@dimen/paper_airplane_reset_anim_offset"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:propertyName="translateY"
+                    android:valueFrom="10"
+                    android:valueTo="0"
+                    android:duration="@dimen/paper_airplane_transform_duration_1"
+                    android:startOffset="@dimen/paper_airplane_reset_anim_offset"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:propertyName="translateX"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:startOffset="@dimen/paper_airplane_reset_anim_offset"
+                    android:valueType="floatType" />
+                <objectAnimator
+                    android:propertyName="rotation"
+                    android:startOffset="@dimen/paper_airplane_reset_anim_offset"
+                    android:valueType="floatType" />
+
+            </set>
+        </aapt:attr>
+    </target>
+    <target android:name="vector">
+        <aapt:attr name="android:animation">
+            <set>
+            <objectAnimator
+                    android:propertyName="alpha"
+                    android:startOffset="@dimen/paper_airplane_transform_offset"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueFrom="1"
+                    android:valueTo="0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:startOffset="@dimen/paper_airplane_reset_anim_offset"
+                    android:duration="@dimen/paper_airplane_transform_duration_2"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

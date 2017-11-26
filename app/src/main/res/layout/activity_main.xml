@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:background="@android:color/transparent"
         android:gravity="bottom"
-        sothree:layout_constraintBottom_toTopOf="@id/textChatInput"
+        sothree:layout_constraintBottom_toTopOf="@id/layoutChatInput"
         sothree:layout_constraintEnd_toEndOf="parent"
         sothree:layout_constraintStart_toStartOf="parent"
         sothree:layout_constraintTop_toTopOf="parent"
@@ -43,7 +43,7 @@
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <include
-        android:id="@+id/textChatInput"
+        android:id="@+id/layoutChatInput"
         layout="@layout/chat_input_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/chat_fragment_chat_input_height"
