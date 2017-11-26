@@ -5,9 +5,9 @@
         <vector
             android:name="vector"
             android:width="50dp"
-            android:height="15dp"
+            android:height="4dp"
             android:viewportWidth="50"
-            android:viewportHeight="15">
+            android:viewportHeight="10">
             <group android:name="layer1">
                 <path
                     android:name="path10"

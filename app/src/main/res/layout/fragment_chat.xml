@@ -7,12 +7,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="10dp">
+    android:paddingTop="@dimen/chat_fragment_expanded_top_margin">
 
     <se.agency.adccor.jocelyn.views.TwinStateAnimationView
         android:id="@+id/handlebarBorder"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/chat_fragment_valley_border_height"
         android:scaleType="fitXY"
         app:startState="@drawable/valley_border_anim_to_straight"
         app:endState="@drawable/valley_border_anim_to_curve"
