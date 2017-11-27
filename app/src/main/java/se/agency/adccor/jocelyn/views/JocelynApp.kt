@@ -2,6 +2,7 @@ package se.agency.adccor.jocelyn.views
 
 import android.app.Application
 import android.arch.persistence.room.Room
+import se.agency.adccor.jocelyn.model.DataRepository
 import se.agency.adccor.jocelyn.model.MessageDatabase
 
 /**
@@ -11,11 +12,11 @@ import se.agency.adccor.jocelyn.model.MessageDatabase
 class JocelynApp : Application() {
 
     companion object {
-        lateinit var database: MessageDatabase
+        lateinit var dataRepository: DataRepository
     }
 
     override fun onCreate() {
         super.onCreate()
-        JocelynApp.database =  Room.databaseBuilder(this, MessageDatabase::class.java, "message_db").build()
+        JocelynApp.dataRepository =  DataRepository(Room.databaseBuilder(this, MessageDatabase::class.java, "message_db").build())
     }
 }

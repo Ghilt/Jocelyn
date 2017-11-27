@@ -1,5 +1,6 @@
 package se.agency.adccor.jocelyn.model
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
@@ -11,7 +12,7 @@ import android.arch.persistence.room.Query
 interface ChatMessageDao {
 
     @Query("SELECT * FROM message")
-    fun getAllMessages(): List<ChatMessage>
+    fun getAllMessages(): LiveData<List<ChatMessage>>
 
     @Insert
     fun insert(message: ChatMessage)
