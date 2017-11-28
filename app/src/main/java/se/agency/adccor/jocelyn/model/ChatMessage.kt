@@ -11,6 +11,5 @@ import android.arch.persistence.room.PrimaryKey
 data class ChatMessage(
     @PrimaryKey(autoGenerate = true)
     val uid: Long,
-    val firstName: String = "",
-    val lastName: String = ""
+    val message: String = ""
 )

@@ -3,18 +3,19 @@ package se.agency.adccor.jocelyn.views
 import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.drawable.Animatable
+import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.TextView
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.chat_input_layout.*
 import se.agency.adccor.jocelyn.R
 import se.agency.adccor.jocelyn.model.ChatMessage
-import se.agency.adccor.jocelyn.views.dummy.DummyContent
-import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
-import android.os.AsyncTask
-import android.arch.lifecycle.ViewModelProviders
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
+import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
 
 
 /**
@@ -32,40 +33,32 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         val chatFragment = fragmentManager.getChatFragment()
         slidingLayout.addPanelSlideListener(ChatFragmentSlideListener(this, chatFragment))
 
-        val dbdao = JocelynApp.dataRepository.chatMessageDao()
-
-        class Task : AsyncTask<Void, Void, LiveData<List<ChatMessage>>>() {
-            override fun doInBackground(vararg params: Void): LiveData<List<ChatMessage>>{
-                dbdao.insert(ChatMessage(0))
-                return dbdao.getAllMessages()
-            }
-
-            override fun onPostExecute(messages: LiveData<List<ChatMessage>>?) {
-                Log.d("spx" , " cha " + messages?.value?.size)
-            }
-        }
 
         val model = ViewModelProviders.of(this).get(ChatViewModel::class.java)
-        model.setup(JocelynApp.dataRepository)
-        model.getMessages().observe(this,  object : Observer<List<ChatMessage>> { //converting this to lamba is imo maybe an example of when kotlin can be not verbose enough
+        model.setup(JocelynApp.dataRepository) // this is called twice, obviously really really dumb
+        model.getMessages().observe(this, Observer<List<ChatMessage>> { t -> //converting this to lamba is imo maybe an example of when kotlin can be not verbose enough
 
-            override fun onChanged(t: List<ChatMessage>?) {
-                buttonSend.text = "${t?.size}"
-            }
+            buttonSend.text = "${t?.size}"
         })
 
-         buttonSend.setOnClickListener {
-            Log.d("spx ", "   af af ")
-            val plane = it.background
-            if(plane is Animatable){
-                plane.start()
-            }
-             Task().execute()
+        buttonSend.setOnClickListener {
+            val message: String = textChatInput.text.toString()
+            textChatInput.setText("", TextView.BufferType.EDITABLE)
+
+            JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, message))
+            animateView(it)
         }
 
     }
 
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem) {
+    private fun animateView(it: View) {
+        val plane = it.background
+        if (plane is Animatable) {
+            plane.start()
+        }
+    }
+
+    override fun onListFragmentInteraction(item: ChatMessage) {
 
     }
 }

@@ -7,7 +7,7 @@ import android.arch.persistence.room.RoomDatabase
  * Created by adamn on 11/26/2017.
  */
 
-@Database(entities = arrayOf(ChatMessage::class), version = 1)
+@Database(entities = arrayOf(ChatMessage::class), version = 2)
 abstract class MessageDatabase : RoomDatabase() {
     abstract fun chatMessageDao(): ChatMessageDao
 }

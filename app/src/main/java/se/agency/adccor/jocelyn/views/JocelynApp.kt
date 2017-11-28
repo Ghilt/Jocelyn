@@ -17,6 +17,8 @@ class JocelynApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        JocelynApp.dataRepository =  DataRepository(Room.databaseBuilder(this, MessageDatabase::class.java, "message_db").build())
+        // fallbackToDestructiveMigration TODO add migration policy
+        val roomDB = Room.databaseBuilder(this, MessageDatabase::class.java, "message_db").fallbackToDestructiveMigration().build()
+        JocelynApp.dataRepository =  DataRepository(roomDB.chatMessageDao())
     }
 }

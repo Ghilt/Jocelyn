@@ -1,6 +1,9 @@
 package se.agency.adccor.jocelyn.views
 
 import android.app.Fragment
+import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
@@ -13,13 +16,13 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.fragment_chat.view.*
 import se.agency.adccor.jocelyn.R
-import se.agency.adccor.jocelyn.views.dummy.DummyContent
-import se.agency.adccor.jocelyn.views.dummy.DummyContent.DummyItem
+import se.agency.adccor.jocelyn.model.ChatMessage
+import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
 
 class ChatFragment : Fragment() {
-    // TODO: Customize parameters
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
+    private var data: LiveData<List<ChatMessage>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +45,10 @@ class ChatFragment : Fragment() {
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            recyclerView.adapter = ChatHistoryRecyclerViewAdapter(getContext(), DummyContent.ITEMS, mListener)
-            Log.d("spx", "test On panel slide" + recyclerView.adapter.itemCount)
+
+            val model = ViewModelProviders.of(activity as LifecycleActivity).get(ChatViewModel::class.java)
+            model.setup(JocelynApp.dataRepository)
+            recyclerView.adapter = ChatHistoryRecyclerViewAdapter(activity, model.getMessages(), mListener)
         }
 
         return view
@@ -74,7 +79,7 @@ class ChatFragment : Fragment() {
 
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem)
+        fun onListFragmentInteraction(item: ChatMessage)
     }
 
     companion object {
