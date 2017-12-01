@@ -1,6 +1,5 @@
 package se.agency.adccor.jocelyn.views.listeners
 
-import android.app.Activity
 import android.util.Log
 import android.view.View
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
@@ -12,8 +11,7 @@ import se.agency.adccor.jocelyn.views.ChatFragment
  * Created by adamn on 11/24/2017.
  */
 
-class ChatFragmentSlideListener(private val activity: Activity,
-                                private val chatFragment: ChatFragment) : SlidingUpPanelLayout.PanelSlideListener {
+class ChatFragmentSlideListener(private val chatFragment: ChatFragment) : SlidingUpPanelLayout.PanelSlideListener {
 
     private var previousStaticState = PanelState.COLLAPSED
 

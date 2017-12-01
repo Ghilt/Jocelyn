@@ -4,6 +4,7 @@ import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.arch.paging.PagedList
 import android.graphics.drawable.Animatable
 import android.os.AsyncTask
 import android.os.Bundle
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.chat_input_layout.*
 import se.agency.adccor.jocelyn.R
 import se.agency.adccor.jocelyn.model.ChatMessage
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
+import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
 
 
@@ -31,13 +33,12 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
 
         val slidingLayout: SlidingUpPanelLayout = findViewById(R.id.sliding_layout)
         val chatFragment = fragmentManager.getChatFragment()
-        slidingLayout.addPanelSlideListener(ChatFragmentSlideListener(this, chatFragment))
+        slidingLayout.addPanelSlideListener(ChatFragmentSlideListener(chatFragment))
 
 
-        val model = ViewModelProviders.of(this).get(ChatViewModel::class.java)
-        model.setup(JocelynApp.dataRepository) // this is called twice, obviously really really dumb
-        model.getMessages().observe(this, Observer<List<ChatMessage>> { t -> //converting this to lamba is imo maybe an example of when kotlin can be not verbose enough
+        val model = ViewModelProviders.of(this, ChatViewModelFactory(JocelynApp.dataRepository)).get(ChatViewModel::class.java)
 
+        model.getMessages().observe(this, Observer<PagedList<ChatMessage>> { t -> //converting this to lamba is imo maybe an example of when kotlin can be not verbose enough
             buttonSend.text = "${t?.size}"
         })
 
