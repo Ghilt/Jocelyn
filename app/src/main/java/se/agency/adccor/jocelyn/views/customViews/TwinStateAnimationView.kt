@@ -1,4 +1,4 @@
-package se.agency.adccor.jocelyn.views
+package se.agency.adccor.jocelyn.views.customViews
 
 import android.content.Context
 import android.graphics.drawable.AnimatedVectorDrawable

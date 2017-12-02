@@ -1,23 +1,21 @@
 package se.agency.adccor.jocelyn.views
 
 import android.arch.lifecycle.LifecycleActivity
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.graphics.drawable.Animatable
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
 import se.agency.adccor.jocelyn.R
 import se.agency.adccor.jocelyn.model.ChatMessage
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
+import se.agency.adccor.jocelyn.views.listeners.switchPanelState
 
 
 /**
@@ -31,14 +29,13 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val slidingLayout: SlidingUpPanelLayout = findViewById(R.id.sliding_layout)
         val chatFragment = fragmentManager.getChatFragment()
         slidingLayout.addPanelSlideListener(ChatFragmentSlideListener(chatFragment))
 
-
         val model = ViewModelProviders.of(this, ChatViewModelFactory(JocelynApp.dataRepository)).get(ChatViewModel::class.java)
 
-        model.getMessages().observe(this, Observer<PagedList<ChatMessage>> { t -> //converting this to lamba is imo maybe an example of when kotlin can be not verbose enough
+        model.getMessages().observe(this, Observer<PagedList<ChatMessage>> { t ->
+            //converting this to lamba is imo maybe an example of when kotlin can be not verbose enough
             buttonSend.text = "${t?.size}"
         })
 
@@ -61,5 +58,13 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
 
     override fun onListFragmentInteraction(item: ChatMessage) {
 
+    }
+
+    override fun enablePanelSlide(enabled: Boolean) {
+        slidingLayout.isTouchEnabled = enabled
+    }
+
+    override fun swipePanel() {
+        slidingLayout.switchPanelState()
     }
 }

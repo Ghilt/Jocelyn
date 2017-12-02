@@ -16,13 +16,8 @@ import se.agency.adccor.jocelyn.model.ChatMessage
 
 class ChatHistoryRecyclerViewAdapter(private val context: Context) : PagedListAdapter<ChatMessage, ChatHistoryRecyclerViewAdapter.ViewHolder>(DIFF_CALLBACK) {
 
-    private val state1 = ConstraintSet()
-    private val state2 = ConstraintSet()
-
-    init {
-        state1.clone(context, R.layout.chat_bubble_item)
-        state2.clone(context, R.layout.chat_bubble_other_item)
-    }
+    private val state1 = ConstraintSet().apply { clone(context, R.layout.chat_bubble_item) }
+    private val state2 = ConstraintSet().apply { clone(context, R.layout.chat_bubble_other_item) }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.chat_bubble_item, parent, false) as ConstraintLayout
@@ -71,7 +66,7 @@ class ChatHistoryRecyclerViewAdapter(private val context: Context) : PagedListAd
             override fun areContentsTheSame(oldMessage: ChatMessage, newMessage: ChatMessage): Boolean {
                 // NOTE: if you use equals, your object must properly override Object#equals()
                 // Incorrectly returning false here will result in too many animations.
-                return oldMessage.equals(newMessage)// TODO
+                return oldMessage == newMessage
             }
         }
     }

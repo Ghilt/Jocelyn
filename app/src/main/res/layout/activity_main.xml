@@ -7,7 +7,7 @@
     <!--https://github.com/umano/AndroidSlidingUpPanel-->
     <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:sothree="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/sliding_layout"
+        android:id="@+id/slidingLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/transparent"
@@ -19,7 +19,7 @@
         sothree:umanoFadeColor="@android:color/transparent"
         sothree:umanoOverlay="true"
         sothree:umanoPanelHeight="@dimen/chat_fragment_collapsed_height"
-        sothree:umanoScrollableView="@id/chat_fragment"
+        sothree:umanoScrollableView="@id/fragmentChat"
         sothree:umanoShadowHeight="0dp">
 
         <TextView
@@ -31,9 +31,9 @@
             android:text="Main Content"
             android:textSize="16sp" />
 
-        <!--Seeting maring top on this fragment is not compatible with the way softkeyboards pushes things, caution advised-->
+        <!--Setting margin_top on this fragment is not compatible with the way softkeyboards pushes things, caution advised-->
         <fragment
-            android:id="@+id/chat_fragment"
+            android:id="@+id/fragmentChat"
             class="se.agency.adccor.jocelyn.views.ChatFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

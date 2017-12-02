@@ -30,6 +30,10 @@ class ChatFragment : Fragment() {
         model.getMessages().observe(activity as LifecycleOwner, Observer<PagedList<ChatMessage>> { pagedList -> adapter.setList(pagedList) })
         view.listChatMessages.adapter = adapter
 
+        view.buttonCollapse.setOnClickListener {
+            mListener?.swipePanel()
+        }
+
         return view
     }
 
@@ -49,15 +53,22 @@ class ChatFragment : Fragment() {
 
     fun onFragmentExpanded() {
         handlebarBorder.toStartState()
+        buttonCollapse.toStartState()
+        mListener?.enablePanelSlide(false)
     }
 
     fun onFragmentCollapsed() {
         handlebarBorder.toEndState()
+        buttonCollapse.toEndState()
+        mListener?.enablePanelSlide()
     }
 
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onListFragmentInteraction(item: ChatMessage)
+
+        fun enablePanelSlide(enabled: Boolean = true)
+
+        fun swipePanel()
     }
 
 //    companion object {

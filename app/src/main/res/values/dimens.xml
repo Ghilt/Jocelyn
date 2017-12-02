@@ -4,6 +4,7 @@
 
     <!--Chat fragment-->
     <dimen name="chat_fragment_valley_border_height">30dp</dimen>
+    <dimen name="chat_fragment_valley_button_collapse_height">15dp</dimen>
     <dimen name="chat_fragment_collapsed_height">200dp</dimen>
     <dimen name="chat_fragment_expanded_top_margin">80dp</dimen>
     <dimen name="chat_fragment_small_padding">8dp</dimen>

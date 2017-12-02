@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:name="se.agency.adccor.jocelyn.views.ChatFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    android:name="se.agency.adccor.jocelyn.views.ChatFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:paddingTop="@dimen/chat_fragment_expanded_top_margin">
 
-    <se.agency.adccor.jocelyn.views.TwinStateAnimationView
+    <se.agency.adccor.jocelyn.views.customViews.TwinStateAnimationView
         android:id="@+id/handlebarBorder"
         android:layout_width="0dp"
         android:layout_height="@dimen/chat_fragment_valley_border_height"
         android:scaleType="fitXY"
-        app:startState="@drawable/valley_border_anim_to_straight"
         app:endState="@drawable/valley_border_anim_to_curve"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:startState="@drawable/valley_border_anim_to_straight" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listChatMessages"
@@ -32,6 +31,17 @@
         app:layout_constraintTop_toBottomOf="@id/handlebarBorder"
         tools:context="se.agency.adccor.jocelyn.views.ChatFragment"
         tools:listitem="@layout/chat_bubble_item" />
+
+    <se.agency.adccor.jocelyn.views.customViews.TwinStateAnimationView
+        android:id="@+id/buttonCollapse"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/chat_fragment_valley_button_collapse_height"
+        app:startState="@drawable/up_down_arrow_anim_from_up"
+        app:endState="@drawable/up_down_arrow_anim_from_down"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:tint="@color/test"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/handlebarBorder" />
 
 </android.support.constraint.ConstraintLayout>
 

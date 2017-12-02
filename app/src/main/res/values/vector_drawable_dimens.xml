@@ -7,6 +7,8 @@
     <item name="valley_vector_drawable_valley_path" format="string" type="dimen">M -5.6 2.4 L -5.6 17.8 L 55.1 17.7 L 55.1 2.4 L 50.3 2.4 C 42.9 2.4 41.2 2.5 35 2.5 L 14.5 2.5 C 8.3 2.5 6.6 2.4 -0.8 2.4 Z</item>
     <item name="valley_vector_drawable_straight_path" format="string" type="dimen">M -5.6 2.4 L -5.6 17.7 L 55.1 17.7 L 55.1 2.4 L 50.3 2.4 C 42.9 2.4 41.2 7.9 35 7.9 L 14.5 7.9 C 8.3 7.9 6.6 2.4 -0.8 2.4 Z</item>
 
+    <item name="up_down_arrow_drawable_up_path" format="string" type="dimen">M 59 25 C 57 25 53 29 52 30 L 16 63 C 10 68 7 67 4 65 C 1 63 -0 58 1 54 L 59 -0 L 116 52 C 119 56 118 61 115 64 C 112 67 108 68 104 65 L 66 30 C 63 28 61 25 59 25 Z</item>
+    <item name="up_down_arrow_drawable_down_path" format="string" type="dimen">M 59 67 C 57 67 53 66 52 65 L 1 13 C -1 10 0 5 2 3 C 5 0 11 -1 14 1 L 59 44 L 103 1 C 106 -1 112 -0 115 3 C 118 6 119 10 116 13 L 66 65 C 64 66 61 67 59 67 Z</item>
 
     <!--Paper airplane-->
     <item name="paper_airplane_stroke_width" format="float" type="dimen">3.8</item>

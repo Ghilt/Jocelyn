@@ -35,3 +35,7 @@ class ChatFragmentSlideListener(private val chatFragment: ChatFragment) : Slidin
 }
 
 fun PanelState?.isStatic() = this == PanelState.EXPANDED || this == PanelState.COLLAPSED
+
+fun SlidingUpPanelLayout.switchPanelState() {
+    panelState = if (this.panelState == PanelState.COLLAPSED) PanelState.EXPANDED else PanelState.COLLAPSED
+}
