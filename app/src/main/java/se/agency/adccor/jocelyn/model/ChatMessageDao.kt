@@ -15,7 +15,7 @@ interface ChatMessageDao {
     @Query("SELECT * FROM message")
     fun getAllMessages(): LiveData<List<ChatMessage>>
 
-    @Query("SELECT * FROM message")
+    @Query("SELECT * FROM message ORDER BY uid")
     fun getMessagesPaged(): LivePagedListProvider<Int, ChatMessage>
 
     @Insert

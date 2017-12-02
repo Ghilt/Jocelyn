@@ -43,5 +43,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/handlebarBorder" />
 
+    <View android:layout_height="4dp"
+        android:layout_width="0dp"
+        android:background="@drawable/shadow_line"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/handlebarBorder" />
+
 </android.support.constraint.ConstraintLayout>
 
