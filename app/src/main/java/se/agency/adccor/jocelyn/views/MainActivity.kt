@@ -7,7 +7,6 @@ import android.arch.paging.PagedList
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
@@ -48,7 +47,7 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
             animateView(it)
         }
 
-        //window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     private fun animateView(it: View) {

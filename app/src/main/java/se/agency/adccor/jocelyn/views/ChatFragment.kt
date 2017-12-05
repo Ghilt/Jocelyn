@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.fragment_chat.view.*
 import se.agency.adccor.jocelyn.R
@@ -18,7 +19,10 @@ import se.agency.adccor.jocelyn.model.ChatMessage
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 
-class ChatFragment : Fragment() {
+class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
+
+    val mysteriousPaddingOffset = 120 //It is not known why this is
+
     private var mListener: OnListFragmentInteractionListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,7 +38,15 @@ class ChatFragment : Fragment() {
             mListener?.swipePanel()
         }
 
+        view.viewTreeObserver.addOnGlobalLayoutListener(this)
+
         return view
+    }
+
+    override fun onGlobalLayout() {
+        view.viewTreeObserver.removeOnGlobalLayoutListener(this)
+        val height = contentContainer.measuredHeight - (mysteriousPaddingOffset * resources.displayMetrics.density + 0.5f)
+        (view.listChatMessages.adapter as ChatHistoryRecyclerViewAdapter).setBottomPaddingOffset(height)
     }
 
     override fun onAttach(context: Context) {
@@ -60,7 +72,12 @@ class ChatFragment : Fragment() {
     fun onFragmentCollapsed() {
         handlebarBorder.toEndState()
         buttonCollapse.toEndState()
+        listChatMessages.smoothScrollToPosition(listChatMessages.adapter.itemCount - 1)
         mListener?.enablePanelSlide()
+    }
+
+    fun onPanelSlide(slideOffset: Float) {// yay hacky
+        (listChatMessages.adapter as ChatHistoryRecyclerViewAdapter).onPanelSlide(slideOffset)
     }
 
     interface OnListFragmentInteractionListener {

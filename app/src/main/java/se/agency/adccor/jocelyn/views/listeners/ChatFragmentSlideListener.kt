@@ -16,12 +16,10 @@ class ChatFragmentSlideListener(private val chatFragment: ChatFragment) : Slidin
     private var previousStaticState = PanelState.COLLAPSED
 
     override fun onPanelSlide(panel: View?, slideOffset: Float) {
-        Log.d("spx", "test On panel slide")
+        chatFragment.onPanelSlide(slideOffset)
     }
 
     override fun onPanelStateChanged(panel: View?, previousState: PanelState?, newState: PanelState?) {
-        Log.d("spx", "test On panel slide state changed $previousState $newState")
-
         if (newState == PanelState.EXPANDED && newState != previousStaticState) {
             chatFragment.onFragmentExpanded()
         } else if (newState == PanelState.COLLAPSED && newState != previousStaticState) {

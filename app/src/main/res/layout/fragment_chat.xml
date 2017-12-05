@@ -8,46 +8,73 @@
     android:background="@android:color/transparent"
     android:paddingTop="@dimen/chat_fragment_expanded_top_margin">
 
-    <se.agency.adccor.jocelyn.views.customViews.TwinStateAnimationView
-        android:id="@+id/handlebarBorder"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/chat_fragment_valley_border_height"
-        android:scaleType="fitXY"
-        app:endState="@drawable/valley_border_anim_to_curve"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:startState="@drawable/valley_border_anim_to_straight" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listChatMessages"
+    <!--This is the most silly thing ive ever done but im quite frustrated right now that I apparently need this (this is insane) extra layout for some reason-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/contentContainer"
+        android:name="se.agency.adccor.jocelyn.views.ChatFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/lightGray"
-        app:layoutManager="LinearLayoutManager"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/handlebarBorder"
-        tools:context="se.agency.adccor.jocelyn.views.ChatFragment"
-        tools:listitem="@layout/chat_bubble_item" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <se.agency.adccor.jocelyn.views.customViews.TwinStateAnimationView
-        android:id="@+id/buttonCollapse"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/chat_fragment_valley_button_collapse_height"
-        app:startState="@drawable/up_down_arrow_anim_from_up"
-        app:endState="@drawable/up_down_arrow_anim_from_down"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:tint="@color/test"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/handlebarBorder" />
+        <se.agency.adccor.jocelyn.views.customViews.TwinStateAnimationView
+            android:id="@+id/handlebarBorder"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/chat_fragment_valley_border_height"
+            android:scaleType="fitXY"
+            app:endState="@drawable/valley_border_anim_to_curve"
+            app:layout_constraintEnd_toEndOf="@id/contentContainer"
+            app:layout_constraintStart_toStartOf="@id/contentContainer"
+            app:layout_constraintTop_toTopOf="@id/contentContainer"
+            app:startState="@drawable/valley_border_anim_to_straight" />
 
-    <View android:layout_height="4dp"
-        android:layout_width="0dp"
-        android:background="@drawable/shadow_line"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/handlebarBorder" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listChatMessages"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/lightGray"
+            android:clipToPadding="false"
+            android:padding="@dimen/chat_fragment_small_padding"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/viewShadowTop"
+            tools:context="se.agency.adccor.jocelyn.views.ChatFragment"
+            tools:listitem="@layout/chat_bubble_item" />
 
+        <View
+            android:id="@+id/viewButtonAreaTop"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/chat_fragment_top_button_area_height"
+            android:background="@color/lightGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/handlebarBorder" />
+
+        <View
+            android:id="@+id/viewShadowTop"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/shadow_size"
+            android:background="@drawable/shadow_line_bot"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewButtonAreaTop" />
+
+
+        <se.agency.adccor.jocelyn.views.customViews.TwinStateAnimationView
+            android:id="@+id/buttonCollapse"
+            android:layout_width="22dp"
+            android:layout_height="@dimen/chat_fragment_button_collapse_height"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="18dp"
+            android:tint="@color/test"
+            app:endState="@drawable/up_down_arrow_anim_from_down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/handlebarBorder"
+            app:startState="@drawable/up_down_arrow_anim_from_up" />
+
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
 
