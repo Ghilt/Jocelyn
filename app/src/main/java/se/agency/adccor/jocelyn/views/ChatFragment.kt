@@ -22,6 +22,8 @@ import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
 
     val mysteriousPaddingOffset = 120 //It is not known why this is
+    private var bottomPaddingOffset = 0f
+
 
     private var mListener: OnListFragmentInteractionListener? = null
 
@@ -45,8 +47,7 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
 
     override fun onGlobalLayout() {
         view.viewTreeObserver.removeOnGlobalLayoutListener(this)
-        val height = contentContainer.measuredHeight - (mysteriousPaddingOffset * resources.displayMetrics.density + 0.5f)
-        (view.listChatMessages.adapter as ChatHistoryRecyclerViewAdapter).setBottomPaddingOffset(height)
+        bottomPaddingOffset = contentContainer.measuredHeight - (mysteriousPaddingOffset * resources.displayMetrics.density + 0.5f)
     }
 
     override fun onAttach(context: Context) {
@@ -76,8 +77,12 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
         mListener?.enablePanelSlide()
     }
 
-    fun onPanelSlide(slideOffset: Float) {// yay hacky
-        (listChatMessages.adapter as ChatHistoryRecyclerViewAdapter).onPanelSlide(slideOffset)
+    fun onPanelSlide(slideOffset: Float) {
+        listChatMessages.setPadding( /** A little ugly, especially using padding top at bot padding**/
+                listChatMessages.paddingLeft,
+                listChatMessages.paddingTop,
+                listChatMessages.paddingRight,
+                listChatMessages.paddingTop + (bottomPaddingOffset * (1 - slideOffset)).toInt())
     }
 
     interface OnListFragmentInteractionListener {
