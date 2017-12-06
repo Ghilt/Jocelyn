@@ -7,6 +7,7 @@ import android.arch.paging.PagedList
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
@@ -39,15 +40,17 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
             buttonSend.text = "${t?.size}"
         })
 
-        buttonSend.setOnClickListener {
-            val message: String = textChatInput.text.toString()
-            textChatInput.setText("", TextView.BufferType.EDITABLE)
+        buttonSend.setOnClickListener(::onSendButtonClick)
 
-            JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, message))
-            animateView(it)
-        }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN) // this is a bit glitch yand pushes over and black flickers
+    }
 
-//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    private fun onSendButtonClick(v: View) {
+        val message: String = textChatInput.text.toString()
+        textChatInput.setText("", TextView.BufferType.EDITABLE)
+
+        JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, message))
+        animateView(v)
     }
 
     private fun animateView(it: View) {
@@ -65,7 +68,9 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         slidingLayout.isTouchEnabled = enabled
     }
 
-    override fun swipePanel() {
+    override fun onSwipePanelCollapseExpandButton() {
+        val chatFragment = fragmentManager.getChatFragment()
+        chatFragment.onPanelCollapseExpandButton(slidingLayout.panelState)
         slidingLayout.switchPanelState()
     }
 }
