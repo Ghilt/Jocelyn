@@ -7,7 +7,6 @@ import android.arch.paging.PagedList
 import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
@@ -36,13 +35,11 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         val model = ViewModelProviders.of(this, ChatViewModelFactory(JocelynApp.dataRepository)).get(ChatViewModel::class.java)
 
         model.getMessages().observe(this, Observer<PagedList<ChatMessage>> { t ->
-            //converting this to lamba is imo maybe an example of when kotlin can be not verbose enough
             buttonSend.text = "${t?.size}"
         })
 
         buttonSend.setOnClickListener(::onSendButtonClick)
 
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN) // this is a bit glitch yand pushes over and black flickers
     }
 
     private fun onSendButtonClick(v: View) {

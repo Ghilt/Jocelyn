@@ -8,7 +8,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,7 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     private val mysteriousPaddingOffset = 120 //It is not known why this is
     private var bottomPaddingOffset = 0f
 
-    private var lastVisibleItemAtTimeOfCollapseClick: Int? = null
+    private var lastVisibleItemWhenCollapse: Int? = null
 
     private var mListener: OnListFragmentInteractionListener? = null
 
@@ -73,32 +72,32 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     }
 
     fun onPanelCollapseExpandButton(panelState: SlidingUpPanelLayout.PanelState?) {
-        if (panelState == SlidingUpPanelLayout.PanelState.EXPANDED) {
-            val layoutManager = listChatMessages.layoutManager as LinearLayoutManager
-            val position = layoutManager.findLastVisibleItemPosition()
-            layoutManager.scrollToPositionWithOffset(position,0)
-            lastVisibleItemAtTimeOfCollapseClick = position
+        if (panelState.isExpanded()) {
+            lastVisibleItemWhenCollapse = listChatMessages.findLastCompletelyVisibleItemPosition()
         }
     }
 
     fun onFragmentExpanded() {
         handlebarBorder.toStartState()
         buttonCollapse.toStartState()
-        mListener?.enablePanelSlide(false)
+        lastVisibleItemWhenCollapse = null
     }
 
     fun onFragmentCollapsed() {
         handlebarBorder.toEndState()
         buttonCollapse.toEndState()
-        mListener?.enablePanelSlide()
-        lastVisibleItemAtTimeOfCollapseClick?.let {
+        lastVisibleItemWhenCollapse?.let {
             listChatMessages.smoothScrollToPosition(it)
-            lastVisibleItemAtTimeOfCollapseClick = null
+            lastVisibleItemWhenCollapse = null
         }
     }
 
 
     fun onPanelSlide(slideOffset: Float) {
+        if (lastVisibleItemWhenCollapse == null) {
+            lastVisibleItemWhenCollapse = listChatMessages.findLastCompletelyVisibleItemPosition()
+        }
+
         listChatMessages.setPadding(
                 /** A little ugly, especially using padding top at bot padding**/
                 listChatMessages.paddingLeft,
@@ -115,15 +114,7 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
         fun onSwipePanelCollapseExpandButton()
     }
 
-
-//    companion object {
-//        fun newInstance(columnCount: Int): ChatFragment {
-//            val fragment = ChatFragment()
-//            val args = Bundle()
-//            fragment.arguments = args
-//            return fragment
-//        }
-//    }
-
-
 }
+
+private fun SlidingUpPanelLayout.PanelState?.isExpanded(): Boolean = this == SlidingUpPanelLayout.PanelState.EXPANDED
+

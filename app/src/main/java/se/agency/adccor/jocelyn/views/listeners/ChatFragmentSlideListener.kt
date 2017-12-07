@@ -1,6 +1,5 @@
 package se.agency.adccor.jocelyn.views.listeners
 
-import android.util.Log
 import android.view.View
 import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.sothree.slidinguppanel.SlidingUpPanelLayout.PanelState

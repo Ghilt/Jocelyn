@@ -19,7 +19,7 @@
         sothree:umanoFadeColor="@android:color/transparent"
         sothree:umanoOverlay="true"
         sothree:umanoPanelHeight="@dimen/chat_fragment_collapsed_height"
-        sothree:umanoScrollableView="@id/fragmentChat"
+        sothree:umanoScrollableView="@id/listChatMessages"
         sothree:umanoShadowHeight="0dp">
 
         <TextView
