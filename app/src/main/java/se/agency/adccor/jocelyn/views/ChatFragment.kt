@@ -8,6 +8,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,7 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     private val mysteriousPaddingOffset = 120 //It is not known why this is
     private var bottomPaddingOffset = 0f
 
-    private var lastVisibleItemWhenCollapse: Int? = null
+    private var lastVisibleItemWhenCollapse: Int = RecyclerView.NO_POSITION
 
     private var mListener: OnListFragmentInteractionListener? = null
 
@@ -80,21 +81,24 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     fun onFragmentExpanded() {
         handlebarBorder.toStartState()
         buttonCollapse.toStartState()
-        lastVisibleItemWhenCollapse = null
+        clearLastVisiblePosition()
     }
 
     fun onFragmentCollapsed() {
         handlebarBorder.toEndState()
         buttonCollapse.toEndState()
-        lastVisibleItemWhenCollapse?.let {
-            listChatMessages.smoothScrollToPosition(it)
-            lastVisibleItemWhenCollapse = null
+        if(lastVisibleItemWhenCollapse.isPosition()){
+            listChatMessages.smoothScrollToPosition(lastVisibleItemWhenCollapse)
+            clearLastVisiblePosition()
         }
     }
 
+    private fun clearLastVisiblePosition() {
+        lastVisibleItemWhenCollapse = RecyclerView.NO_POSITION
+    }
 
     fun onPanelSlide(slideOffset: Float) {
-        if (lastVisibleItemWhenCollapse == null) {
+        if (lastVisibleItemWhenCollapse.isNotPosition()) {
             lastVisibleItemWhenCollapse = listChatMessages.findLastCompletelyVisibleItemPosition()
         }
 
@@ -115,6 +119,10 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     }
 
 }
+
+
+private fun Int.isNotPosition(): Boolean = this == RecyclerView.NO_POSITION
+private fun Int.isPosition(): Boolean = this != RecyclerView.NO_POSITION
 
 private fun SlidingUpPanelLayout.PanelState?.isExpanded(): Boolean = this == SlidingUpPanelLayout.PanelState.EXPANDED
 
