@@ -9,6 +9,7 @@ import android.arch.paging.PagedList
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +25,11 @@ import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
 
     private val mysteriousPaddingOffset = 120 //It is not known why this is
+    private val mysteriousPaddingOffset2 = 110
     private var bottomPaddingOffset = 0f
+    private var slidingModifier = 0f
 
-    private var lastVisibleItemWhenCollapse: Int = RecyclerView.NO_POSITION
+    private var lastSlideOffset: Float = 0f
 
     private var mListener: OnListFragmentInteractionListener? = null
 
@@ -55,7 +58,9 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     override fun onGlobalLayout() {
         view.viewTreeObserver.removeOnGlobalLayoutListener(this)
         bottomPaddingOffset = contentContainer.measuredHeight - (mysteriousPaddingOffset * resources.displayMetrics.density + 0.5f)
-        onPanelSlide(0f)
+        slidingModifier = contentContainer.measuredHeight - (mysteriousPaddingOffset2 * resources.displayMetrics.density + 0.5f)
+        Log.d("ChatFragment","onGloabalLayout: bottomPaddingOffset = $bottomPaddingOffset" )
+        setBottomOffsetPadding()
     }
 
     override fun onAttach(context: Context) {
@@ -72,36 +77,25 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
         mListener = null
     }
 
-    fun onPanelCollapseExpandButton(panelState: SlidingUpPanelLayout.PanelState?) {
-        if (panelState.isExpanded()) {
-            lastVisibleItemWhenCollapse = listChatMessages.findLastCompletelyVisibleItemPosition()
-        }
-    }
-
     fun onFragmentExpanded() {
         handlebarBorder.toStartState()
         buttonCollapse.toStartState()
-        clearLastVisiblePosition()
     }
 
     fun onFragmentCollapsed() {
         handlebarBorder.toEndState()
         buttonCollapse.toEndState()
-        if(lastVisibleItemWhenCollapse.isPosition()){
-            listChatMessages.smoothScrollToPosition(lastVisibleItemWhenCollapse)
-            clearLastVisiblePosition()
-        }
-    }
-
-    private fun clearLastVisiblePosition() {
-        lastVisibleItemWhenCollapse = RecyclerView.NO_POSITION
     }
 
     fun onPanelSlide(slideOffset: Float) {
-        if (lastVisibleItemWhenCollapse.isNotPosition()) {
-            lastVisibleItemWhenCollapse = listChatMessages.findLastCompletelyVisibleItemPosition()
-        }
+        setBottomOffsetPadding(slideOffset)
 
+        val delta = lastSlideOffset - slideOffset
+        listChatMessages.scrollBy(0, (slidingModifier * delta).toInt())
+        lastSlideOffset = slideOffset
+    }
+
+    private fun setBottomOffsetPadding(slideOffset: Float = 0f) {
         listChatMessages.setPadding(
                 /** A little ugly, especially using padding top at bot padding**/
                 listChatMessages.paddingLeft,
@@ -119,10 +113,3 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     }
 
 }
-
-
-private fun Int.isNotPosition(): Boolean = this == RecyclerView.NO_POSITION
-private fun Int.isPosition(): Boolean = this != RecyclerView.NO_POSITION
-
-private fun SlidingUpPanelLayout.PanelState?.isExpanded(): Boolean = this == SlidingUpPanelLayout.PanelState.EXPANDED
-

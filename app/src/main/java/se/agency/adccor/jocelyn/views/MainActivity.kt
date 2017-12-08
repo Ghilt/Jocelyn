@@ -66,8 +66,6 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
     }
 
     override fun onSwipePanelCollapseExpandButton() {
-        val chatFragment = fragmentManager.getChatFragment()
-        chatFragment.onPanelCollapseExpandButton(slidingLayout.panelState)
         slidingLayout.switchPanelState()
     }
 }
