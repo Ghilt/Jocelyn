@@ -29,10 +29,13 @@ dependencies {
     compile 'com.sothree.slidinguppanel:library:3.4.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 //    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    // Retrofit networking
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     // Architecture Components
     implementation "android.arch.persistence.room:runtime:1.0.0"

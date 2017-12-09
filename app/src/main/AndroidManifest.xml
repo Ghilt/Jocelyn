@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="se.agency.adccor.jocelyn">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".views.JocelynApp"
         android:allowBackup="true"

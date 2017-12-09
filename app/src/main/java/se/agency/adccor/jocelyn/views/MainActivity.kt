@@ -4,7 +4,6 @@ import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
-import android.graphics.drawable.Animatable
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -12,6 +11,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
 import se.agency.adccor.jocelyn.R
 import se.agency.adccor.jocelyn.model.ChatMessage
+import se.agency.adccor.jocelyn.model.network.DialogFlowMessage
+import se.agency.adccor.jocelyn.model.network.Resource
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
@@ -35,7 +36,7 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         val model = ViewModelProviders.of(this, ChatViewModelFactory(JocelynApp.dataRepository)).get(ChatViewModel::class.java)
 
         model.getMessages().observe(this, Observer<PagedList<ChatMessage>> { t ->
-            buttonSend.text = "${t?.size}"
+            //            buttonSend.text = "${t?.size}"
         })
 
         buttonSend.setOnClickListener(::onSendButtonClick)
@@ -47,14 +48,20 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         textChatInput.setText("", TextView.BufferType.EDITABLE)
 
         JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, message))
-        animateView(v)
-    }
 
-    private fun animateView(it: View) {
-        val plane = it.background
-        if (plane is Animatable) {
-            plane.start()
-        }
+//        val data = JocelynApp.dataRepository.getChatResponse(message)
+//        data.observe(this, Observer<DialogFlowMessage> { messageResponse ->
+//            JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, messageResponse?.name ?: "response was null"))
+//        })
+
+        val data = JocelynApp.dataRepository.getChatResponse2(message)
+        data.observe(this, Observer<Resource<DialogFlowMessage?>> { messageResponse ->
+            if (messageResponse != null){
+                dLog("print status ${messageResponse.status}")
+            }
+        })
+
+        v.animateBackground()
     }
 
     override fun onListFragmentInteraction(item: ChatMessage) {
@@ -69,3 +76,4 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         slidingLayout.switchPanelState()
     }
 }
+
