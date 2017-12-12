@@ -29,29 +29,30 @@ class DataRepository(private val service: DialogFlowWebService, private val dao:
         dao.insert(chatMessage)
     }
 
-    fun getChatResponse(message: String): LiveData<DialogFlowMessage> {
-        val call = service.reposForUser("fs-opensource")
-        val data = MutableLiveData<DialogFlowMessage>()
-        call.enqueue(object : Callback<List<DialogFlowMessage>> {
+//    fun getChatResponse(message: String): LiveData<DialogFlowMessage> {
+//        val call = service.testQuery()
+//        val data = MutableLiveData<DialogFlowMessage>()
+//        call.enqueue(object : Callback<DialogFlowMessage> {
+//
+//            override fun onResponse(call: Call<DialogFlowMessage>?, response: Response<DialogFlowMessage>?) {
+//                data.value = DialogFlowMessage("Hi there 192")
+//                dLog("success")
+//            }
+//
+//            override fun onFailure(call: Call<DialogFlowMessage>?, t: Throwable?) {
+//                dLog("fail")
+//            }
+//
+//        })
+//        return data
+//    }
 
-            override fun onResponse(call: Call<List<DialogFlowMessage>>?, response: Response<List<DialogFlowMessage>>?) {
-                data.value = DialogFlowMessage("Hi there 192")
-                dLog("success")
-            }
-
-            override fun onFailure(call: Call<List<DialogFlowMessage>>?, t: Throwable?) {
-                dLog("fail")
-            }
-
-        })
-        return data
-    }
-
-    fun getChatResponse2(message: String): LiveData<Resource<DialogFlowMessage?>> {
+    fun getChatResponse(message: String): LiveData<Resource<DialogFlowMessage?>> {
         return object : NetworkBoundResource<DialogFlowMessage, DialogFlowMessage>() {
+
             override fun saveCallResult(item: DialogFlowMessage?) {
-                if (item?.name != null) {
-                    insertNewMessage(ChatMessage(0, item.name))
+                if (item?.result?.resolvedQuery != null) {
+                    insertNewMessage(ChatMessage(0, item.result.resolvedQuery))
                 }
             }
 
@@ -60,7 +61,7 @@ class DataRepository(private val service: DialogFlowWebService, private val dao:
             override fun loadFromDb(): LiveData<DialogFlowMessage> = MutableLiveData<DialogFlowMessage>().apply { value = null }
 
             override fun createCall(): LiveData<Response<DialogFlowMessage>> {
-                val call = service.reposForUser2("fs-opensource")
+                val call = service.testQuery()
                 val data = MutableLiveData<Response<DialogFlowMessage>>()
                 call.enqueue(object : Callback<DialogFlowMessage> {
 

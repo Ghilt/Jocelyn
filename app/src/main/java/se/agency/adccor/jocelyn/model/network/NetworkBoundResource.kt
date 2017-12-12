@@ -95,7 +95,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
             return null
         }
 
-        override fun onPostExecute(result: Void) {
+        override fun onPostExecute(result: Void?) {
             val source = sourceReference.get()
             source?.result?.addSource(source.loadFromDb()) { newData ->
                 source.result.setValue(Resource.success(newData))
