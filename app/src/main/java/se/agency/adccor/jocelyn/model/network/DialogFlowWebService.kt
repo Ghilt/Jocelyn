@@ -14,7 +14,7 @@ interface DialogFlowWebService {
         @Header("Authorization") clientAccessToken: String = "Bearer cdfb636b6b7341c99c448c64d090577e",
         @Query("v") version: String = "20171212",
         @Query("lang") lang: String = "en",
-        @Query("query") query: String = "Where%20do%20you%20come%20fr0m%3F",
+        @Query("query") query: String,
         @Query("sessionId") sessionId: String = "12345678904"
         ) : Call<DialogFlowMessage>
 

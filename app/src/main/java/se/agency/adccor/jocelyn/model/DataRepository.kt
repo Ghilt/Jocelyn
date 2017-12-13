@@ -51,8 +51,8 @@ class DataRepository(private val service: DialogFlowWebService, private val dao:
         return object : NetworkBoundResource<DialogFlowMessage, DialogFlowMessage>() {
 
             override fun saveCallResult(item: DialogFlowMessage?) {
-                if (item?.result?.resolvedQuery != null) {
-                    insertNewMessage(ChatMessage(0, item.result.resolvedQuery))
+                if (item?.result?.fulfillment?.speech != null) {
+                    insertNewMessage(ChatMessage(0, item.result.fulfillment.speech))
                 }
             }
 
@@ -61,7 +61,7 @@ class DataRepository(private val service: DialogFlowWebService, private val dao:
             override fun loadFromDb(): LiveData<DialogFlowMessage> = MutableLiveData<DialogFlowMessage>().apply { value = null }
 
             override fun createCall(): LiveData<Response<DialogFlowMessage>> {
-                val call = service.testQuery()
+                val call = service.testQuery(query = message)
                 val data = MutableLiveData<Response<DialogFlowMessage>>()
                 call.enqueue(object : Callback<DialogFlowMessage> {
 
