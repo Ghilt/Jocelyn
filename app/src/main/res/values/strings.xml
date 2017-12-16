@@ -1,4 +1,20 @@
 <resources>
     <string name="app_name">Jocelyn</string>
 
+    <!--Persist data-->
+    <string name="preference_file_key">common_jocelyn_prefs</string>
+    <string name="preference_key_uuid">common_jocelyn_prefs_unique_id</string>
+    <string name="room_message_database_name">message_data</string>
+
+    <!--Retrofit-->
+    <string name="retrofit_base_url">https://api.dialogflow.com/</string>
+    <string name="retrofit_header_auth">Authorization</string>
+    <string name="retrofit_query_param_session_id">sessionId</string>
+    <string name="retrofit_query_param_language">lang</string>
+    <string name="retrofit_query_param_language_value">en</string>
+    <string name="retrofit_query_param_version">v</string>
+    <string name="retrofit_query_param_version_value">20171212</string>
+
+
+
 </resources>

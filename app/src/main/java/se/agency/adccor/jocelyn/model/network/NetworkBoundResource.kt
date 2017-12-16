@@ -38,7 +38,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
     // returns a LiveData that represents the resource, implemented
     // in the base class.
     fun getAsLiveData(): LiveData<Resource<ResultType?>> {
-        result.setValue(Resource.loading(null))
+        result.value = Resource.loading(null)
         val dbSource = loadFromDb()
         result.addSource(dbSource) { data ->
             result.removeSource(dbSource)

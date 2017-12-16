@@ -29,24 +29,6 @@ class DataRepository(private val service: DialogFlowWebService, private val dao:
         dao.insert(chatMessage)
     }
 
-//    fun getChatResponse(message: String): LiveData<DialogFlowMessage> {
-//        val call = service.testQuery()
-//        val data = MutableLiveData<DialogFlowMessage>()
-//        call.enqueue(object : Callback<DialogFlowMessage> {
-//
-//            override fun onResponse(call: Call<DialogFlowMessage>?, response: Response<DialogFlowMessage>?) {
-//                data.value = DialogFlowMessage("Hi there 192")
-//                dLog("success")
-//            }
-//
-//            override fun onFailure(call: Call<DialogFlowMessage>?, t: Throwable?) {
-//                dLog("fail")
-//            }
-//
-//        })
-//        return data
-//    }
-
     fun getChatResponse(message: String): LiveData<Resource<DialogFlowMessage?>> {
         return object : NetworkBoundResource<DialogFlowMessage, DialogFlowMessage>() {
 
@@ -67,12 +49,10 @@ class DataRepository(private val service: DialogFlowWebService, private val dao:
 
                     override fun onResponse(call: Call<DialogFlowMessage>?, response: Response<DialogFlowMessage>?) {
                         data.value = response
-                        dLog("success")
                     }
 
                     override fun onFailure(call: Call<DialogFlowMessage>?, t: Throwable?) {
                         data.value = null
-                        dLog("fail")
                     }
 
                 })

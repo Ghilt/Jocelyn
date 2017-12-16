@@ -49,23 +49,14 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
 
         JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, message))
 
-//        val data = JocelynApp.dataRepository.getChatResponse(message)
-//        data.observe(this, Observer<DialogFlowMessage> { messageResponse ->
-//            JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, messageResponse?.name ?: "response was null"))
-//        })
 
         val data = JocelynApp.dataRepository.getChatResponse(message)
         data.observe(this, Observer<Resource<DialogFlowMessage?>> { messageResponse ->
-            if (messageResponse != null){
 
-                when (messageResponse.status) {
-                    Resource.Status.LOADING -> dLog("print status ${messageResponse.status}")
-                    Resource.Status.SUCCESS -> dLog("print status ${messageResponse.status}")//dLog("${messageResponse.data?.result?.resolvedQuery}")
-                    Resource.Status.ERROR -> dLog("print status ${messageResponse.status}")
-                }
-
-            } else {
-                dLog("fail it was null")
+            when (messageResponse?.status) {
+                Resource.Status.LOADING -> dLog("print status ${messageResponse.status}") // TODO loading indicator
+                Resource.Status.SUCCESS -> dLog("print status ${messageResponse.status}")
+                Resource.Status.ERROR -> dLog("print status ${messageResponse.status}")
             }
 
         })

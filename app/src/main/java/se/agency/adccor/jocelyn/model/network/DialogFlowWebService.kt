@@ -8,15 +8,8 @@ import retrofit2.http.*
  */
 interface DialogFlowWebService {
 
-//    @Headers("Authorization: Bearer cdfb636b6b7341c99c448c64d090577e") // TODO store client access token properly
     @GET("/v1/query")
-    fun testQuery(
-        @Header("Authorization") clientAccessToken: String = "Bearer cdfb636b6b7341c99c448c64d090577e",
-        @Query("v") version: String = "20171212",
-        @Query("lang") lang: String = "en",
-        @Query("query") query: String,
-        @Query("sessionId") sessionId: String = "12345678904"
-        ) : Call<DialogFlowMessage>
+    fun testQuery(@Query("query") query: String) : Call<DialogFlowMessage>
 
     @GET("/users/{user}/repos")
     fun reposForUser2(@Path("user")user: String) : Call<DialogFlowMessage>
