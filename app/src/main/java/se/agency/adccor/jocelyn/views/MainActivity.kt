@@ -4,8 +4,11 @@ import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
@@ -41,6 +44,14 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
 
         buttonSend.setOnClickListener(::onSendButtonClick)
 
+//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (currentFocus?.windowToken != null) imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        currentFocus.clearFocus()
     }
 
     private fun onSendButtonClick(v: View) {
