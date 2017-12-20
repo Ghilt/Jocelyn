@@ -4,14 +4,14 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.LivePagedListProvider
 import android.os.AsyncTask
+import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import se.agency.adccor.jocelyn.model.network.DialogFlowMessage
 import se.agency.adccor.jocelyn.model.network.DialogFlowWebService
 import se.agency.adccor.jocelyn.model.network.NetworkBoundResource
 import se.agency.adccor.jocelyn.model.network.Resource
-import se.agency.adccor.jocelyn.views.dLog
+import se.agency.adccor.jocelyn.model.network.dialogFlowData.DialogFlowResponse
 
 
 /**
@@ -29,29 +29,30 @@ class DataRepository(private val service: DialogFlowWebService, private val dao:
         dao.insert(chatMessage)
     }
 
-    fun getChatResponse(message: String): LiveData<Resource<DialogFlowMessage?>> {
-        return object : NetworkBoundResource<DialogFlowMessage, DialogFlowMessage>() {
+    fun getChatResponse(message: String): LiveData<Resource<DialogFlowResponse?>> {
+        return object : NetworkBoundResource<DialogFlowResponse, DialogFlowResponse>() {
 
-            override fun saveCallResult(item: DialogFlowMessage?) {
+            override fun saveCallResult(item: DialogFlowResponse?) {
                 if (item?.result?.fulfillment?.speech != null) {
-                    insertNewMessage(ChatMessage(0, item.result.fulfillment.speech))
+                    insertNewMessage(ChatMessage(0, item))
                 }
             }
 
-            override fun shouldFetch(data: DialogFlowMessage?) = true
+            override fun shouldFetch(data: DialogFlowResponse?) = true
 
-            override fun loadFromDb(): LiveData<DialogFlowMessage> = MutableLiveData<DialogFlowMessage>().apply { value = null }
+            override fun loadFromDb(): LiveData<DialogFlowResponse> = MutableLiveData<DialogFlowResponse>().apply { value = null }
 
-            override fun createCall(): LiveData<Response<DialogFlowMessage>> {
+            override fun createCall(): LiveData<Response<DialogFlowResponse>> {
                 val call = service.testQuery(query = message)
-                val data = MutableLiveData<Response<DialogFlowMessage>>()
-                call.enqueue(object : Callback<DialogFlowMessage> {
+                val data = MutableLiveData<Response<DialogFlowResponse>>()
+                call.enqueue(object : Callback<DialogFlowResponse> {
 
-                    override fun onResponse(call: Call<DialogFlowMessage>?, response: Response<DialogFlowMessage>?) {
+                    override fun onResponse(call: Call<DialogFlowResponse>?, response: Response<DialogFlowResponse>?) {
                         data.value = response
                     }
 
-                    override fun onFailure(call: Call<DialogFlowMessage>?, t: Throwable?) {
+                    override fun onFailure(call: Call<DialogFlowResponse>?, t: Throwable?) {
+                        Log.d("Network", "GetChatResponse network call failed ${t?.message}")
                         data.value = null
                     }
 

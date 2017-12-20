@@ -6,7 +6,7 @@ import okhttp3.Response
 /**
  * Created by adamn on 12/16/2017.
  */
-class HeaderQueryHttpInterceptor() : okhttp3.Interceptor {
+class HeaderQueryHttpInterceptor : okhttp3.Interceptor {
 
     private val queryParams = ArrayList<Pair<String, String>>()
     private val headers = ArrayList<Pair<String, String>>()

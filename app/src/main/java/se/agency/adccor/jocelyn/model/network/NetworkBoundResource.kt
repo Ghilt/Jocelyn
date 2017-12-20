@@ -58,7 +58,8 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         // we re-attach dbSource as a new source,
         // it will dispatch its latest value quickly
         result.addSource(dbSource) { newData ->
-            result.setValue(Resource.loading(newData)) }
+            result.setValue(Resource.loading(newData))
+        }
         result.addSource(apiResponse) { response ->
             result.removeSource(apiResponse)
             result.removeSource(dbSource)

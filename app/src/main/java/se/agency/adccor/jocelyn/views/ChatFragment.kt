@@ -8,13 +8,11 @@ import android.arch.lifecycle.ViewModelProviders
 import android.arch.paging.PagedList
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.android.synthetic.main.fragment_chat.*
 import kotlinx.android.synthetic.main.fragment_chat.view.*
 import se.agency.adccor.jocelyn.R
@@ -59,7 +57,7 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
         view.viewTreeObserver.removeOnGlobalLayoutListener(this)
         bottomPaddingOffset = contentContainer.measuredHeight - (mysteriousPaddingOffset * resources.displayMetrics.density + 0.5f)
         slidingModifier = contentContainer.measuredHeight - (mysteriousPaddingOffset2 * resources.displayMetrics.density + 0.5f)
-        Log.d("ChatFragment","onGloabalLayout: bottomPaddingOffset = $bottomPaddingOffset" )
+        Log.d("ChatFragment", "onGloabalLayout: bottomPaddingOffset = $bottomPaddingOffset")
         setBottomOffsetPadding()
     }
 

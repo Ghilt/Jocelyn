@@ -7,15 +7,16 @@ import android.arch.paging.PagedList
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
 import se.agency.adccor.jocelyn.R
 import se.agency.adccor.jocelyn.model.ChatMessage
-import se.agency.adccor.jocelyn.model.network.DialogFlowMessage
+import se.agency.adccor.jocelyn.model.UserMessage
 import se.agency.adccor.jocelyn.model.network.Resource
+import se.agency.adccor.jocelyn.model.network.dialogFlowData.DialogFlowResponse
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
@@ -43,7 +44,10 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         })
 
         buttonSend.setOnClickListener(::onSendButtonClick)
-
+        Picasso.with(this).load("https://picsum.photos/300/500/?random")
+                .fit()
+                .centerCrop()
+                .into(imageMainBackground)
 //        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
@@ -58,11 +62,11 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         val message: String = textChatInput.text.toString()
         textChatInput.setText("", TextView.BufferType.EDITABLE)
 
-        JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, message))
+        JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, userMessageData = UserMessage(message)))
 
 
         val data = JocelynApp.dataRepository.getChatResponse(message)
-        data.observe(this, Observer<Resource<DialogFlowMessage?>> { messageResponse ->
+        data.observe(this, Observer<Resource<DialogFlowResponse?>> { messageResponse ->
 
             when (messageResponse?.status) {
                 Resource.Status.LOADING -> dLog("print status ${messageResponse.status}") // TODO loading indicator
