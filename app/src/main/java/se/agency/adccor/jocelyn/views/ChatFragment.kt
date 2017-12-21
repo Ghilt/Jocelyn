@@ -22,6 +22,7 @@ import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 
 class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
 
+    private var softKeyboardIsOpen = false
     private val mysteriousPaddingOffset = 120 //It is not known why this is
     private val mysteriousPaddingOffset2 = 110
     private var bottomPaddingOffset = 0f
@@ -86,6 +87,8 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
     }
 
     fun onPanelSlide(slideOffset: Float) {
+        if (softKeyboardIsOpen) return
+
         setBottomOffsetPadding(slideOffset)
 
         val delta = lastSlideOffset - slideOffset
@@ -101,6 +104,22 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
                 listChatMessages.paddingRight,
                 listChatMessages.paddingTop + (bottomPaddingOffset * (1 - slideOffset)).toInt())
     }
+
+
+    fun onKeyboardClosed() {
+        /**These get called multiple times for each event, care*/
+        softKeyboardIsOpen = false
+        buttonCollapse.visibility = View.VISIBLE
+    }
+
+    fun onKeyboardOpened() {
+        val completelyExpanded = 1f
+        setBottomOffsetPadding(completelyExpanded)
+        lastSlideOffset = completelyExpanded
+        softKeyboardIsOpen = true
+        buttonCollapse.visibility = View.GONE // TODO reroute to close softkeyboard instead?
+    }
+
 
     interface OnFragmentInteractionListener {
         fun onListFragmentInteraction(item: ChatMessage)

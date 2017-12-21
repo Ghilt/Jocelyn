@@ -1,22 +1,14 @@
 package se.agency.adccor.jocelyn.views
 
 import android.app.Fragment
-import android.arch.lifecycle.LifecycleActivity
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_chat.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
 import se.agency.adccor.jocelyn.R
-import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
-import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
-import android.opengl.ETC1.getHeight
-
 
 
 class MainFragment : Fragment() {

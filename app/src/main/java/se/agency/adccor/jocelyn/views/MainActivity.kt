@@ -19,6 +19,7 @@ import se.agency.adccor.jocelyn.model.network.dialogFlowData.DialogFlowResponse
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
+import se.agency.adccor.jocelyn.views.listeners.expand
 import se.agency.adccor.jocelyn.views.listeners.switchPanelState
 
 
@@ -27,7 +28,7 @@ import se.agency.adccor.jocelyn.views.listeners.switchPanelState
  */
 
 /** LifecycleActivity deprecated in favor of appcompat, but hopefully They will bring the lifecycle stuff into regular activity soon**/
-class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionListener, MainFragment.OnFragmentInteractionListener {
+class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionListener, MainFragment.OnFragmentInteractionListener, SoftKeyboardDetector.OnKeyboardListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +45,15 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionList
 
         buttonSend.setOnClickListener(::onSendButtonClick)
 
+        activityRoot.viewTreeObserver.addOnGlobalLayoutListener(SoftKeyboardDetector(this, activityRoot, this))
+
+        activityRoot.listenOnSoftKeyboard(this)
+
     }
 
     override fun onStop() {
         super.onStop()
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        if (currentFocus?.windowToken != null) imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
-        currentFocus.clearFocus()
+        hideSoftKeyboard()
     }
 
     private fun onSendButtonClick(v: View) {
@@ -84,5 +87,22 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionList
     override fun onSwipePanelCollapseExpandButton() {
         slidingLayout.switchPanelState()
     }
-}
 
+    private fun hideSoftKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if (currentFocus?.windowToken != null) imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        currentFocus.clearFocus()
+    }
+
+    override fun onKeyboardOpened() {
+        fragmentManager.getChatFragment().onKeyboardOpened()
+        enablePanelSlide(false)
+        slidingLayout.expand()
+    }
+
+    override fun onKeyboardClosed() {
+        fragmentManager.getChatFragment().onKeyboardClosed()
+        enablePanelSlide(true)
+    }
+
+}

@@ -36,3 +36,7 @@ fun PanelState?.isStatic() = this == PanelState.EXPANDED || this == PanelState.C
 fun SlidingUpPanelLayout.switchPanelState() {
     panelState = if (this.panelState == PanelState.COLLAPSED) PanelState.EXPANDED else PanelState.COLLAPSED
 }
+
+fun SlidingUpPanelLayout.expand() {
+    panelState = PanelState.EXPANDED
+}
