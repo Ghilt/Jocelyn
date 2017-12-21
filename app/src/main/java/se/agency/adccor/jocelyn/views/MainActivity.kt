@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.chat_input_layout.*
 import se.agency.adccor.jocelyn.R
@@ -28,7 +27,7 @@ import se.agency.adccor.jocelyn.views.listeners.switchPanelState
  */
 
 /** LifecycleActivity deprecated in favor of appcompat, but hopefully They will bring the lifecycle stuff into regular activity soon**/
-class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteractionListener {
+class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionListener, MainFragment.OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,11 +43,7 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         })
 
         buttonSend.setOnClickListener(::onSendButtonClick)
-        Picasso.with(this).load("https://picsum.photos/300/500/?random")
-                .fit()
-                .centerCrop()
-                .into(imageMainBackground)
-//        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
     }
 
     override fun onStop() {
@@ -63,7 +58,6 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnListFragmentInteraction
         textChatInput.setText("", TextView.BufferType.EDITABLE)
 
         JocelynApp.dataRepository.insertNewMessage(ChatMessage(0, userMessageData = UserMessage(message)))
-
 
         val data = JocelynApp.dataRepository.getChatResponse(message)
         data.observe(this, Observer<Resource<DialogFlowResponse?>> { messageResponse ->

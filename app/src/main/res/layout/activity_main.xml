@@ -22,11 +22,11 @@
         sothree:umanoScrollableView="@id/listChatMessages"
         sothree:umanoShadowHeight="0dp">
 
-        <ImageView
-            android:id="@+id/imageMainBackground"
+        <fragment
+            android:id="@+id/mainFragment"
+            class="se.agency.adccor.jocelyn.views.MainFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/test"/>
+            android:layout_height="match_parent" />
 
         <!--Setting margin_top on this fragment is not compatible with the way softkeyboards pushes things, caution advised-->
         <fragment

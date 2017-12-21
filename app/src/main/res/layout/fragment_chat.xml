@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/chat_fragment_expanded_top_margin">
 
     <!--This is the most silly thing ive ever done but im quite frustrated right now that I apparently need this (this is insane) extra layout for some reason-->
+    <!--It is used to measure the entire fragment-->
     <!--TODO -->
     <android.support.constraint.ConstraintLayout
         android:id="@+id/contentContainer"

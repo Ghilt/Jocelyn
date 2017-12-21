@@ -29,7 +29,7 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
 
     private var lastSlideOffset: Float = 0f
 
-    private var mListener: OnListFragmentInteractionListener? = null
+    private var mListener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -63,10 +63,10 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
+        if (context is OnFragmentInteractionListener) {
             mListener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
     }
 
@@ -102,7 +102,7 @@ class ChatFragment : Fragment(), ViewTreeObserver.OnGlobalLayoutListener {
                 listChatMessages.paddingTop + (bottomPaddingOffset * (1 - slideOffset)).toInt())
     }
 
-    interface OnListFragmentInteractionListener {
+    interface OnFragmentInteractionListener {
         fun onListFragmentInteraction(item: ChatMessage)
 
         fun enablePanelSlide(enabled: Boolean = true)
