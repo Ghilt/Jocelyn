@@ -20,6 +20,7 @@ import se.agency.adccor.jocelyn.model.viewModel.ChatViewModel
 import se.agency.adccor.jocelyn.model.viewModel.ChatViewModelFactory
 import se.agency.adccor.jocelyn.views.listeners.ChatFragmentSlideListener
 import se.agency.adccor.jocelyn.views.listeners.expand
+import se.agency.adccor.jocelyn.views.listeners.isExpanded
 import se.agency.adccor.jocelyn.views.listeners.switchPanelState
 
 
@@ -29,6 +30,8 @@ import se.agency.adccor.jocelyn.views.listeners.switchPanelState
 
 /** LifecycleActivity deprecated in favor of appcompat, but hopefully They will bring the lifecycle stuff into regular activity soon**/
 class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionListener, MainFragment.OnFragmentInteractionListener, SoftKeyboardDetector.OnKeyboardListener {
+
+    private lateinit var keyboardDetector: SoftKeyboardDetector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +48,8 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionList
 
         buttonSend.setOnClickListener(::onSendButtonClick)
 
-        activityRoot.viewTreeObserver.addOnGlobalLayoutListener(SoftKeyboardDetector(this, activityRoot, this))
+        keyboardDetector = SoftKeyboardDetector(this, activityRoot, this)
+        activityRoot.viewTreeObserver.addOnGlobalLayoutListener(keyboardDetector)
 
         activityRoot.listenOnSoftKeyboard(this)
 
@@ -54,6 +58,14 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionList
     override fun onStop() {
         super.onStop()
         hideSoftKeyboard()
+    }
+
+    override fun onBackPressed() {
+        if (!isSoftKeyboardOpen() && slidingLayout.isExpanded) {
+            slidingLayout.switchPanelState()
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun onSendButtonClick(v: View) {
@@ -76,10 +88,6 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionList
         v.animateBackground()
     }
 
-    override fun onListFragmentInteraction(item: ChatMessage) {
-
-    }
-
     override fun enablePanelSlide(enabled: Boolean) {
         slidingLayout.isTouchEnabled = enabled
     }
@@ -93,6 +101,8 @@ class MainActivity : LifecycleActivity(), ChatFragment.OnFragmentInteractionList
         if (currentFocus?.windowToken != null) imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         currentFocus.clearFocus()
     }
+
+    override fun isSoftKeyboardOpen(): Boolean = keyboardDetector.isOpen
 
     override fun onKeyboardOpened() {
         fragmentManager.getChatFragment().onKeyboardOpened()

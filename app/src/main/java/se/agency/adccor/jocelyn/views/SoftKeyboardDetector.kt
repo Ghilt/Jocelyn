@@ -13,15 +13,19 @@ class SoftKeyboardDetector(private val context: Context,
                            private val view: View,
                            private val listener: OnKeyboardListener ) : ViewTreeObserver.OnGlobalLayoutListener {
     companion object {
-        val KEYBOARD_HEIGHT_APPROXIMATELY = 200f// if more than 200 dp, it's probably a keyboard...
+        val KEYBOARD_HEIGHT_APPROXIMATELY = 200f // if more than 200 dp, it's probably a keyboard...
     }
+
+    var isOpen = false
 
     override fun onGlobalLayout() {
         val heightDiff = view.rootView.height - view.height
-        if (heightDiff > dpToPx(KEYBOARD_HEIGHT_APPROXIMATELY)) {
+        isOpen = if (heightDiff > dpToPx(KEYBOARD_HEIGHT_APPROXIMATELY)) {
             listener.onKeyboardOpened()
+            true
         } else {
             listener.onKeyboardClosed()
+            false
         }
     }
 

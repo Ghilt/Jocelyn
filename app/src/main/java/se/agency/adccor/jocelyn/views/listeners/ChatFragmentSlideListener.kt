@@ -40,3 +40,7 @@ fun SlidingUpPanelLayout.switchPanelState() {
 fun SlidingUpPanelLayout.expand() {
     panelState = PanelState.EXPANDED
 }
+
+val SlidingUpPanelLayout.isExpanded
+    get() = panelState == PanelState.EXPANDED
+
